@@ -25,23 +25,23 @@ int PlayerAI::minimax(int depth, bool is_maximizing)
 {
     int score = evaluate();
 
-    // If Maximizer has won the game return his/her evaluated score
+    // If maximizer is winner return his score
     if (score == 100) 
         return score - depth;
 
-    // If Minimizer has won the game return his/her evaluated score
+    // else if minimizer won return his score
     if (score == -100) 
         return score + depth;
 
-    // If there are no more moves and no winner then it is a tie
+    // If there are no more moves we end game as tie
     if (game_board->no_more_fields()) 
         return 0;
 
-    // If max depth then return score
+    // Stop when reaching max depth and return current evaluation
     if (depth >= max_depth)
         return score;
 
-    // We search for the best moves
+    // We search for the best moves as maximizer (this is current AIPlayer move)
     if (is_maximizing)
     {
         int best = -1000;
@@ -60,7 +60,7 @@ int PlayerAI::minimax(int depth, bool is_maximizing)
 
         return best;
     }
-    // Here we minimize opponent chance to win - we play moves as opponent and search for the worst move
+    // We play as minimizer and try to win against maximizer (we check what chances we gave to opponent by that and we will avoid minimum path)
     else
     {
         int best = 1000;
@@ -80,6 +80,8 @@ int PlayerAI::minimax(int depth, bool is_maximizing)
     }
 }
 
+// Check for each field that is empty how good move it is
+// We select move that has the biggest value = maximizer win means our bot win
 Move PlayerAI::find_best_move()
 {
     int best_val = -1000;
