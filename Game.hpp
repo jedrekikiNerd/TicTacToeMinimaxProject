@@ -5,12 +5,15 @@
 #include "Board.hpp"
 #include "Player.hpp"
 #include "AIPlayer.hpp"
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 
 
 class Game
 {
 private:
     Board* game_board;
+    unsigned int cell_size;
     Player* current_player;
     Player* player1;
     Player* player2;
@@ -19,6 +22,7 @@ public:
     Game()
     {
         unsigned int size = 0;
+        unsigned int win_cond;
         while (1)
         {
             std::cout << "Podaj wielkość planszy (conajmniej 3): ";
@@ -29,7 +33,27 @@ public:
                 break;
         }
 
-        game_board = new Board(size);
+        while (1)
+        {
+            std::cout << "Podaj wielkość pola w pikselach (conajmniej 8): ";
+            std::cin >> cell_size;
+            if (cell_size < 8)
+                std::cout << "Zły rozmiar! Spróbuj ponownie...\n";
+            else
+                break;
+        }
+
+        while (1)
+        {
+            std::cout << "Podaj warunek wygranej: ";
+            std::cin >> win_cond;
+            if (win_cond > size)
+                std::cout << "Zły rozmiar! Spróbuj ponownie...\n";
+            else
+                break;
+        }
+
+        game_board = new Board(size, win_cond);
 
         unsigned int p_number;
         while(1)
@@ -79,6 +103,7 @@ public:
     }
 
     void start_game_loop();
+    void start_game_loop_graphic();
 };
 
 #endif

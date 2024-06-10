@@ -7,6 +7,11 @@ bool PlayerAI::make_move()
     return game_board->make_move(best_move.row, best_move.col, is_first);
 }
 
+bool PlayerAI::make_move_graphical(sf::RenderWindow* game_window, unsigned int cell_size)
+{
+    return make_move();
+}
+
 int PlayerAI::evaluate()
 {
     if (game_board->check_win(is_first))

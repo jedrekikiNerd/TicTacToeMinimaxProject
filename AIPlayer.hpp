@@ -21,6 +21,8 @@ public:
 
     bool make_move() override;
 
+    bool make_move_graphical(sf::RenderWindow* game_window, unsigned int cell_size) override;
+
     int evaluate();
 
     int minimax(int depth, bool is_maximizing);

@@ -2,6 +2,8 @@
 #define BOARD
 
 #include <iostream>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 
 
 class Board
@@ -9,6 +11,7 @@ class Board
 private:
     unsigned int size;
     unsigned int taken_fields = 0;
+    unsigned int winning_condition;
     char first_player_symbol;
     char second_player_symbol;
     char** board_table;
@@ -21,8 +24,8 @@ private:
 
 public:
     Board() : size(3), first_player_symbol('O'), second_player_symbol('X') {allocate_board_table();}
-    Board(unsigned int s) : size(s), first_player_symbol('O'), second_player_symbol('X') {allocate_board_table();}
-    Board(unsigned int s, char p1, char p2) : size(s), first_player_symbol(p1), second_player_symbol(p2) {allocate_board_table();}
+    Board(unsigned int s, unsigned int win_cond) : size(s), winning_condition(win_cond), first_player_symbol('O'), second_player_symbol('X') {allocate_board_table();}
+    Board(unsigned int s, unsigned int win_cond, char p1, char p2) : size(s), winning_condition(win_cond), first_player_symbol(p1), second_player_symbol(p2) {allocate_board_table();}
 
     ~Board() {deallocate_board_table();}
 
@@ -33,6 +36,8 @@ public:
     bool check_win(bool first_player);
 
     void print_board();
+
+    void draw_board_graphical(sf::RenderWindow *window, unsigned int cell_size);
 
     bool no_more_fields() const
     {
